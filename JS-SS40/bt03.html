@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+      </head>
+      <body>
+        <form id="form">
+          <!-- <input type="text" placeholder="Nhập tên cầu thủ" id="inputPlayer" />
+          <button type="submit">Thêm cầu thủ</button> -->
+          <input
+            type="text"
+            placeholder="Nhập id cầu thủ"
+            id="idDeletePlayer"
+          />
+          <button type="submit">Xóa cầu thủ</button>
+        </form>
+        <ul id="listPlayer"></ul>
+        <script>
+          let $ = document.querySelector.bind(document);
+          let $$ = document.querySelectorAll.bind(document);
+          let listPlayer = JSON.parse(localStorage.getItem("players")) || [];
+
+          $("#form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            handleDelete();
+          });
+
+          function render() {
+            let ulHtmls = listPlayer.map(function (player) {
+              return `
+            <li>
+            <span>ID: ${player.id}
+            Tên: 
+            ${player.name}</span>
+            </li>
+            `;
+            });
+            let ulHtml = ulHtmls.join("");
+            $("#listPlayer").innerHTML = ulHtml;
+          }
+          render();
+
+          function handleDelete() {
+            let idDeletePlayer = $("#idDeletePlayer").value;
+            let newListPlayer = listPlayer.filter(function (player) {
+              return player.id != idDeletePlayer;
+            });
+
+            localStorage.setItem("players", JSON.stringify(newListPlayer));
+            listPlayer = newListPlayer;
+            $("#idDeletePlayer").value = "";
+            render();
+          }
+        </script>
+      </body>
+    </html>
+  </body>
+</html>

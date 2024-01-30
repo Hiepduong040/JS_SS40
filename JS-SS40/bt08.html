@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <h1>My To Do List</h1>
+      <div>
+        <input type="text" id="" />
+        <button>Add</button>
+      </div>
+    </section>
+    <ul id="todoList"></ul>
+    <script>
+      let btn = document.querySelector("button");
+      let input = document.querySelector("input");
+      let ul = document.querySelector("ul");
+      let tdList = [];
+      render();
+      btn.addEventListener("click", function () {
+        tdList = JSON.parse(localStorage.getItem(`tdList`));
+        if (tdList === null) {
+          tdList = [];
+        }
+        tdList.push(input.value);
+        localStorage.setItem("tdList", JSON.stringify(tdList));
+        input.value = "";
+        console.log(tdList);
+        render();
+      });
+
+      function render() {
+        tdList = JSON.parse(localStorage.getItem(`tdList`));
+        if (tdList === null) {
+          tdList = [];
+        }
+        ul.innerHTML = "";
+        tdList.forEach((item) => {
+          const listItem = document.createElement("li");
+          listItem.className = "todoItem";
+          listItem.innerHTML = `
+                <span>${item}</span>
+                <span class="deleteButton" onclick="deleteTodo('${item}')">  x</span>`;
+          ul.appendChild(listItem);
+        });
+      }
+      function deleteTodo(item) {
+        const updatedTodos = tdList.filter((t) => t !== item);
+        localStorage.setItem("tdList", JSON.stringify(updatedTodos));
+        render();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="Nhap ten nguoi dung" />
+    <button id="btnAdd">Thêm</button>
+    <button id="btnDelete">Xóa</button>
+    <ul></ul>
+    <script>
+      let btnAdd = document.getElementById("btnAdd");
+      let btnDelete = document.getElementById("btnDelete");
+      let input = document.querySelector("input");
+      let ul = document.querySelector("ul");
+
+      btnAdd.addEventListener("click", function () {
+        ul.innerHTML += `<li>${input.value}</li>`;
+        localStorage.setItem("users", JSON.stringify(input.value));
+        input.value = "";
+        btnAdd.style.display = "";
+      });
+      btnDelete.addEventListener("click", function () {
+        ul.innerHTML = "";
+        btnDelete.style.display = "";
+        localStorage.removeItem("users");
+      });
+    </script>
+  </body>
+</html>

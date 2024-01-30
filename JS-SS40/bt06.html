@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bt6</title>
+  </head>
+  <body>
+    <label for="">Tai khoan</label>
+    <input type="text" id="account" />
+    <br />
+    <label for="">Mat khau</label>
+    <input type="text" id="password" />
+    <br />
+    <button id="sign">Đăng nhập</button>
+    <button id="register">Đăng ký</button>
+    <script>
+      let sign = document.getElementById("sign");
+      let register = document.getElementById("register");
+      let account = document.getElementById("account");
+      let password = document.getElementById("password");
+      let users = [];
+      register.addEventListener("click", function () {
+        let users = JSON.parse(localStorage.getItem("listUsers"));
+        if (users === null) {
+          users = [];
+        }
+        let newUser = { account: account.value, password: password.value };
+        users.push(newUser);
+        localStorage.setItem(`listUsers`, JSON.stringify(users));
+      });
+      sign.addEventListener("click", function () {
+        let users = JSON.parse(localStorage.getItem("listUsers"));
+        if (users === null) {
+          users = [];
+        }
+        let signUser = { account: account.value, password: password.value };
+        for (let i = 0; i < users.length; i++) {
+          if (
+            signUser.account === users[i].account &&
+            signUser.password === users[i].password
+          ) {
+            alert("dang nhap thanh cong");
+            return;
+          }
+        }
+        alert("dang nhap ko thanh cong");
+      });
+    </script>
+  </body>
+</html>

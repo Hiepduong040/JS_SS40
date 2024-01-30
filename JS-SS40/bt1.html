@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Khai báo</h1>
+    <form id="form">
+      <div>Họ và tên</div>
+      <div>
+        <input type="text" id="name" />
+      </div>
+      <div>Tuổi</div>
+      <div>
+        <input type="number" id="age" />
+      </div>
+      <div>Email</div>
+      <div>
+        <input type="text" id="email" />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <script>
+      let $ = document.querySelector.bind(document);
+      let $$ = document.querySelectorAll.bind(document);
+      let khach = JSON.parse(localStorage.getItem("users")) || [];
+
+      function addUser() {
+        let inputName = $("#name").value;
+        let inputAge = $("#age").value;
+        let inputEmail = $("#email").value;
+        if (!inputName) {
+          alert("Tên không được để trống");
+        } else {
+          const user = {
+            name: inputName,
+            age: inputAge,
+            email: inputEmail,
+          };
+          khach.push(user);
+          localStorage.setItem("users", JSON.stringify(khach));
+        }
+      }
+      $("#form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        addUser();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form">
+      <input type="text" placeholder="Nhập tên cầu thủ" id="inputPlayer" />
+      <button type="submit">Thêm cầu thủ</button>
+    </form>
+    <ul id="listPlayer"></ul>
+    <script>
+      let $ = document.querySelector.bind(document);
+      let $$ = document.querySelectorAll.bind(document);
+      let listPlayer = JSON.parse(localStorage.getItem("id")) || [];
+      function createPlayer() {
+        let inputPlayer = $("#inputPlayer").value;
+        if (!inputPlayer) {
+          alert("Tên cầu thủ không được để trống");
+        } else {
+          const player = {
+            id: Math.ceil(Math.random() * 1000000),
+            name: inputPlayer,
+          };
+          listPlayer.push(player);
+          localStorage.setItem("id", JSON.stringify(listPlayer));
+          $("#inputPlayer").value = "";
+          render();
+        }
+      }
+
+      $("#form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        createPlayer();
+      });
+
+      function render() {
+        let ulHtmls = listPlayer.map(function (player) {
+          return `
+            <li>
+            <span>ID: ${player.id}
+                Tên: 
+            ${player.name}</span>
+            </li>
+            `;
+        });
+        let ulHtml = ulHtmls.join("");
+        $("#listPlayer").innerHTML = ulHtml;
+      }
+      render();
+    </script>
+  </body>
+</html>
